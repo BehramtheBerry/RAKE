@@ -133,17 +133,17 @@ class Rake(object):
 
         keyword_candidates = generate_candidate_keyword_scores(phrase_list, word_scores)
 
-        sorted_keywords = sorted(keyword_candidates.iteritems(), key=operator.itemgetter(1), reverse=True)
+        sorted_keywords = sorted(keyword_candidates.items(), key=operator.itemgetter(1), reverse=True)
         return sorted_keywords
 
 
 if test:
-    text = "Compatibility of systems of linear constraints over the set of natural numbers. Criteria of compatibility of a system of linear Diophantine equations, strict inequations, and nonstrict inequations are considered. Upper bounds for components of a minimal set of solutions and algorithms of construction of minimal generating sets of solutions for all types of systems are given. These criteria and the corresponding algorithms for constructing a minimal supporting set of solutions can be used in solving all the considered types of systems and systems of mixed types."
+    text = "Utilizing deep learning techniques, our research aims to predict the impact of climate change on agricultural crop yields. The study employs Long Short-Term Memory (LSTM) networks to analyze time-series data from satellite imagery and climatic variables to forecast regional crop productivity under various global warming scenarios. The predictive model is further refined using Generative Adversarial Networks (GANs) to generate synthetic data augmenting real-world observations, thus improving the robustness of our predictions. Our findings suggest that deep learning can significantly contribute to precise agricultural planning and help in devising strategies to cope with the adverse effects of climate change on food security."
 
     # Split text into sentences
     sentenceList = split_sentences(text)
     #stoppath = "FoxStoplist.txt" #Fox stoplist contains "numbers", so it will not find "natural numbers" like in Table 1.1
-    stoppath = "SmartStoplist.txt"  #SMART stoplist misses some of the lower-scoring keywords in Figure 1.5, which means that the top 1/3 cuts off one of the 4.0 score words in Table 1.1
+    stoppath = 'E:\BigComp24\Code\RAKE\SmartStoplist.txt'  #SMART stoplist misses some of the lower-scoring keywords in Figure 1.5, which means that the top 1/3 cuts off one of the 4.0 score words in Table 1.1
     stopwordpattern = build_stop_word_regex(stoppath)
 
     # generate candidate keywords
@@ -154,15 +154,17 @@ if test:
 
     # generate candidate keyword scores
     keywordcandidates = generate_candidate_keyword_scores(phraseList, wordscores)
-    if debug: print keywordcandidates
+    if debug: print (keywordcandidates)
 
-    sortedKeywords = sorted(keywordcandidates.iteritems(), key=operator.itemgetter(1), reverse=True)
-    if debug: print sortedKeywords
+    sortedKeywords = sorted(keywordcandidates.items(), key=operator.itemgetter(1), reverse=True)
+    #sortedKeywords = sorted(keywordcandidates.iteritems(), key=operator.itemgetter(1), reverse=True)
+    if debug: print (sortedKeywords)
 
     totalKeywords = len(sortedKeywords)
-    if debug: print totalKeywords
-    print sortedKeywords[0:(totalKeywords / 3)]
+    if debug: print (totalKeywords)
+    print (sortedKeywords[0:(totalKeywords // 3)])
+    #print (sortedKeywords[0:(totalKeywords / 3)])
 
-    rake = Rake("SmartStoplist.txt")
+    rake = Rake('E:\BigComp24\Code\RAKE\SmartStoplist.txt')
     keywords = rake.run(text)
-    print keywords
+    print (keywords)
